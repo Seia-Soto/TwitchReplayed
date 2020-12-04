@@ -4,6 +4,10 @@
   "main": "index.js",
   "author": "Seia-Soto <seia@outlook.kr>",
   "license": "MIT",
+  "scripts": {
+    "start": "cross-env DEBUG=twitchReplayed node app --trace-warnings",
+    "debug": "cross-env DEBUG=* node app --trace-warnings"
+  },
   "devDependencies": {
     "eslint": "^6.7.2",
     "eslint-config-standard": "^14.1.0",

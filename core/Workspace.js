@@ -55,14 +55,14 @@ module.exports = class DataManager {
 
   removeWorkspace (name) {
     if (!name) {
-      throw new Error('DataManager.removeWorkspace: The name of workspace to remove should be provided!')
+      throw new Error('Workspace.removeWorkspace: The name of workspace to remove should be provided!')
     }
 
     const directoryPath = this.getDirectoryPath()
     const workspaces = this.getWorkspaces()
 
     if (workspaces.indexOf(name) === -1) {
-      throw new Error('DataManager.removeWorkspace: The name of workspace to remove does not exists!')
+      throw new Error('Workspace.removeWorkspace: The name of workspace to remove does not exists!')
     }
 
     fs.rmdirSync(path.join(directoryPath, name), { recursive: true })

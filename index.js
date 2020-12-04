@@ -1,7 +1,7 @@
 const {
-  DataManager,
-  StreamManager,
-  TokenManager
+  TokenManager,
+  User,
+  Workspace
 } = require('./core')
 
 module.exports = class Client {
@@ -10,7 +10,7 @@ module.exports = class Client {
 
     this.users = []
 
-    this.DataManager = new DataManager()
+    this.Workspace = new Workspace()
     this.TokenManager = new TokenManager()
   }
 
@@ -20,7 +20,7 @@ module.exports = class Client {
     }
 
     for (let i = 0, l = users.length; i < l; i++) {
-      this.users.push(new StreamManager({ username: users[i], client: this, opts: this.opts }))
+      this.users.push(new User({ username: users[i], client: this, opts: this.opts }))
     }
   }
 

@@ -1,3 +1,3 @@
-module.exports.DataManager = require('./DataManager')
-module.exports.StreamManager = require('./StreamManager')
 module.exports.TokenManager = require('./TokenManager')
+module.exports.User = require('./User')
+module.exports.Workspace = require('./Workspace')

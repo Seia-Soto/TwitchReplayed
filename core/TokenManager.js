@@ -1,9 +1,11 @@
 const { twitch } = require('twitchd/structures')
+const EventEmitter = require('events')
 
 module.exports = class TokenManager {
   constructor (opts = {}) {
-    opts.checkInterval = opts.checkInterval || 5 * 1000
+    this.checkInterval = opts.checkInterval || 5 * 1000
 
+    this.event = new EventEmitter()
     this.opts = opts
 
     this.busy = 0
@@ -11,30 +13,32 @@ module.exports = class TokenManager {
 
     this.getPrivateToken()
       .then(() => {
-        setTimeout(async () => {
+        setInterval(async () => {
           if (this.busy) {
             return
           }
           if (await this.checkIfExpired()) {
             this.refreshPrivateToken()
           }
-        }, opts.checkInterval)
+        }, this.checkInterval)
       })
   }
 
   async getPrivateToken () {
     this.busy = 1
 
-    const token = await twitch.getPrivateToken()
+    const { clientID } = await twitch.getPrivateToken()
 
-    this.token = token
+    this.token = clientID
     this.busy = 0
 
-    return token
+    this.event.emit('token.update')
+
+    return clientID
   }
 
   async checkIfExpired () {
-    const data = await twitch.getAccesstoken({
+    const data = await twitch.getAccessToken({
       clientID: this.token,
       username: 'fluentAroma'
     })
